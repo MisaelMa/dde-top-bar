@@ -15,8 +15,10 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_executable(dde-top-bar
   main.cpp
-  panel/mainwindow.cpp
-  panel/mainwindow.h
+  panel/mainpanel.cpp
+  panel/mainpanel.h
+  utils/global.cpp
+  utils/global.h
 )
 
 target_link_libraries(dde-top-bar PRIVATE Qt5::Widgets)
