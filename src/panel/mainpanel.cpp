@@ -12,6 +12,7 @@
 #include <QTimer>
 #include <DWindowManagerHelper>
 #include <QScreen>
+#include <QMessageBox>
 
 DWIDGET_USE_NAMESPACE
 
@@ -99,14 +100,22 @@ void MainPanel::screenChanged()
 
     const QRect dockRect = m_dockInter->frontendWindowRect();
     const QRect primaryRect = QApplication::primaryScreen()->geometry();
+/*
+   QMessageBox *a  = new QMessageBox(this);
+   a->setText(QString::number(m_dockInter->position()));
+   a->show();*/
 
     switch (m_dockInter->position()) {
     case DOCK_POS_BOTTOM:
-        strut_partial.top = TOPHEIGHT * devicePixelRatioF();
+        //space que ocupa la barra
+        strut_partial.top = TOPHEIGHT * devicePixelRatioF()+5;
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
-        setFixedSize(primaryRect.width(), frameHeight);
+        //tamnaño width an height
+        setFixedSize(primaryRect.width(), frameHeight-4);
+
+        //poscion left anf right
         move(primaryRect.x(), primaryRect.y());
        // m_mainPanel->resize(primaryRect.width(), TOPHEIGHT);
        // m_mainPanel->move(0, 0);
@@ -147,6 +156,8 @@ void MainPanel::screenChanged()
         //m_mainPanel->move(0, 0);
         break;
     case DOCK_POS_TOP:
+
+
         strut_partial.top = TOPHEIGHT * devicePixelRatioF() + dockRect.height() / devicePixelRatioF();
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
@@ -165,12 +176,13 @@ void MainPanel::screenChanged()
 
     xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, m_structWidget->winId(), strut_partial);
     m_structWidget->show();
-    show();
 
     //updateBorderPath();
 }
 
 MainPanel::~MainPanel()
 {
+    m_dockInter->deleteLater();
+    m_desktopWidget->deleteLater();
 }
 

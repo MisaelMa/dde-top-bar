@@ -1,4 +1,4 @@
-#include "panel/mainwindow.h"
+#include "panel/mainpanel.h"
 #include <DApplication>
 
 DWIDGET_USE_NAMESPACE
