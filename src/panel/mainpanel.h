@@ -24,9 +24,18 @@ class MainPanel : public DBlurEffectWidget
 public:
     MainPanel(QWidget *parent = nullptr);
     ~MainPanel();
+public slots:
+    void showSetting();
 
 private slots:
+
     void screenChanged();
+#if (DTK_VERSION >= DTK_VERSION_CHECK(2, 0, 9, 10))
+    void onWindowListChanged();
+#endif
+    void onWindowStateChanged(Qt::WindowState windowState);
+    void delayedScreenChanged();
+
 private:
     void init();
     void initConnect();
